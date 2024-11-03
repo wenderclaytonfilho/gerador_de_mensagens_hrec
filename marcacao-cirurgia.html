@@ -28,7 +28,7 @@
         </select>
 
         <label for="procedimentos">Procedimento:</label>
-        <select id="especialidade" required>
+        <select id="procedimento" required>
             <option value="Histerectomia">Histerectomia</option>
             <option value="Ooforectomia">Ooforectomia</option>
             <option value="Colpoperineoplastia">Colpoperineoplastia</option>
@@ -64,26 +64,32 @@
     function gerarMensagem() {
         const nomePaciente = document.getElementById('nomePaciente').value;
         const nomeMedico = document.getElementById('nomeMedico').value;
-        const especialidade = document.getElementById('especialidade').value;
-        const dataConsultaInput = document.getElementById('dataConsulta').value;
+        const procedimento = document.getElementById('procedimento').value;
+        const dataCirurgiaInput = document.getElementById('dataCirurgia').value;
         const horario = document.getElementById('horario').value;
 
-        if (!nomePaciente || !dataConsultaInput || !horario) {
+        if (!nomePaciente || !dataCirurgiaInput || !horario) {
             alert('Por favor, preencha todos os campos.');
             return;
         }
 
      
-        const dataConsulta = new Date(dataConsultaInput + 'T00:00');  
+        const dataCirurgia = new Date(dataCirurgiaInput + 'T00:00');  
         const diasSemana = ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'];
-        const diaSemana = diasSemana[dataConsulta.getUTCDay()]; 
+        const diaSemana = diasSemana[dataCirurgia.getUTCDay()]; 
 
-        const dataFormatada = `${dataConsulta.getUTCDate().toString().padStart(2, '0')}/${(dataConsulta.getUTCMonth() + 1).toString().padStart(2, '0')}/${dataConsulta.getUTCFullYear()}`;
+        const dataFormatada = `${dataCirurgia.getUTCDate().toString().padStart(2, '0')}/${(dataCirurgia.getUTCMonth() + 1).toString().padStart(2, '0')}/${dataCirurgia.getUTCFullYear()}`;
 
         const mensagem = `*Seja Bem-vindo(a) ao setor de Marcações do Hospital Regional Emília Câmara* 🏥\n
         Seguem as informações necessárias.\n
         *Sr. ${nomePaciente}*\n 
-        Sua consulta para o ${especialidade.toLowerCase()} foi agendada para o dia ${dataFormatada}, ${diaSemana}, às ${horario}h com Dr. ${nomeMedico}\n
+        Sua cirurgia de ${procedimento.toLowerCase()} foi agendada para o dia ${dataFormatada}, ${diaSemana}, às ${horario}h com o Cirurgião Dr. ${nomeMedico}.\n
+        🚨*ATENÇÃO!*🚨\n
+        *Lembre-se de realizar o teste da COVID no seu postinho pelo menos 1 dia antes da data marcada!*
+        *-Trazer todos os exames.*
+        *-Em Jejum*
+        *-No Horário marcado*
+        *-Acompanhante de preferência do mesmo Sexo*\n
         *Você deverá procurar a recepção do ambulatório no HREC*\n
         *Obrigado!!*`;
 
