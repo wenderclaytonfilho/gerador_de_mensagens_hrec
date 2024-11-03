@@ -1,0 +1,103 @@
+
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Mensagem de Consulta</title>
+    <link rel="stylesheet" href="styles/global.css">
+    <link rel="shortcut icon" href="assets/icon.ico" type="image/x-icon">
+</head>
+<body>
+
+<div class="container">
+    <a class="util-button" href="index.html">VOLTAR</a>
+    <h2>Preencha os dados da cirurgia</h2>
+
+    <form id="cirurgia-form">
+        <label for="nomePaciente">Nome do Paciente:</label>
+        <input type="text" id="nomePaciente" placeholder="Digite o nome do paciente" required>
+
+        <label for="nomeMedico">Nome do Médico:</label>
+        <select id="nomeMedico" required>
+            <option value="Yoandrys">Yoandrys</option>
+            <option value="Cícero">Cícero</option>
+            <option value="Sílvio">Sílvio</option>
+            <option value="Itamar">Itamar</option>
+            <option value="Túlio">Túlio</option>
+            <option value="Fernando">Fernando</option>
+        </select>
+
+        <label for="procedimentos">Procedimento:</label>
+        <select id="especialidade" required>
+            <option value="Histerectomia">Histerectomia</option>
+            <option value="Ooforectomia">Ooforectomia</option>
+            <option value="Colpoperineoplastia">Colpoperineoplastia</option>
+            <option value="Colecistectomia">Colecistectomia</option>
+            <option value="Colecistectomia Videolaparoscópica">Colecistectomia Videolaparoscópica</option>
+            <option value="Hernioplastia Inguinal">Hernioplastia Inguinal</option>
+            <option value="Hernioplastia Umbilical">Hernioplastia Umbilical</option>
+            <option value="Hemorroidectomia">Hemorroidectomia</option>
+            
+        </select>
+
+        <label for="dataCirurgia">Data da Cirurgia:</label>
+        <input type="date" id="dataCirurgia" required>
+
+        <label for="horario">Horário:</label>
+    <!--<input min="06:00" max="13:00" type="time" id="horario" required>-->
+        <select id="horario">
+            <option value="06:00">06:00</option>
+            <option value="11:00">11:00</option>
+            <option value="13:00">13:00</option>
+        </select>
+
+        <button type="button" onclick="gerarMensagem()">Gerar Mensagem</button>
+    </form>
+
+    <h3>Mensagem Gerada:</h3>
+    <textarea id="mensagem" readonly></textarea>
+    <button id="copiarBtn" onclick="copiarMensagem()">Copiar</button>
+    <div class="creditos"><p>&copyWender Clayton | <a href="https://github.com/wenderclaytonfilho" target="_blank">Github</a></p></div>
+</div>
+
+<script>
+    function gerarMensagem() {
+        const nomePaciente = document.getElementById('nomePaciente').value;
+        const nomeMedico = document.getElementById('nomeMedico').value;
+        const especialidade = document.getElementById('especialidade').value;
+        const dataConsultaInput = document.getElementById('dataConsulta').value;
+        const horario = document.getElementById('horario').value;
+
+        if (!nomePaciente || !dataConsultaInput || !horario) {
+            alert('Por favor, preencha todos os campos.');
+            return;
+        }
+
+     
+        const dataConsulta = new Date(dataConsultaInput + 'T00:00');  
+        const diasSemana = ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'];
+        const diaSemana = diasSemana[dataConsulta.getUTCDay()]; 
+
+        const dataFormatada = `${dataConsulta.getUTCDate().toString().padStart(2, '0')}/${(dataConsulta.getUTCMonth() + 1).toString().padStart(2, '0')}/${dataConsulta.getUTCFullYear()}`;
+
+        const mensagem = `*Seja Bem-vindo(a) ao setor de Marcações do Hospital Regional Emília Câmara* 🏥\n
+        Seguem as informações necessárias.\n
+        *Sr. ${nomePaciente}*\n 
+        Sua consulta para o ${especialidade.toLowerCase()} foi agendada para o dia ${dataFormatada}, ${diaSemana}, às ${horario}h com Dr. ${nomeMedico}\n
+        *Você deverá procurar a recepção do ambulatório no HREC*\n
+        *Obrigado!!*`;
+
+        document.getElementById('mensagem').value = mensagem;
+    }
+
+    function copiarMensagem() {
+        const mensagem = document.getElementById('mensagem');
+        mensagem.select();
+        mensagem.setSelectionRange(0, 99999); 
+        document.execCommand('copy');
+        alert('Mensagem copiada para a área de transferência!');
+    }
+</script>
+
+</body>
+</html>
